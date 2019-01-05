@@ -237,7 +237,9 @@ def pystan_noncentered_schools(data, draws, chains):
     """
     if pystan_version() == 2:
         stan_model = pystan.StanModel(model_code=schools_code)
-        fit = stan_model.sampling(data=data, iter=draws, warmup=0, chains=chains)
+        fit = stan_model.sampling(
+            data=data, iter=draws, warmup=0, chains=chains, check_hmc_diagnostics=False
+        )
     else:
         # hard code schools data
         # bug in PyStan3 preview. It modify data in-place

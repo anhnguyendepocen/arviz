@@ -48,6 +48,14 @@ def test_compare_same(centered_eight, method):
     assert_almost_equal(np.sum(weight), 1.0)
 
 
+def test_compare_unknown_ic_and_method(centered_eight, non_centered_eight):
+    model_dict = {"centered": centered_eight, "non_centered": non_centered_eight}
+    with pytest.raises(NotImplementedError):
+        compare(model_dict, ic="Unknown", method="stacking")
+    with pytest.raises(ValueError):
+        compare(model_dict, ic="loo", method="Unknown")
+
+
 @pytest.mark.parametrize("ic", ["waic", "loo"])
 @pytest.mark.parametrize("method", ["stacking", "BB-pseudo-BMA", "pseudo-BMA"])
 def test_compare_different(centered_eight, non_centered_eight, ic, method):
@@ -83,6 +91,34 @@ def test_summary_bad_fmt(centered_eight):
 def test_waic(centered_eight):
     """Test widely available information criterion calculation"""
     assert waic(centered_eight) is not None
+
+
+def test_waic_bad(centered_eight):
+    """Test widely available information criterion calculation"""
+    centered_eight.sample
+    assert waic(centered_eight) is not None
+
+    del centered_eight.sample_stats["log_likelihood"]
+    with pytest.raises(TypeError):
+        waic(centered_eight)
+
+    del centered_eight.sample_stats
+    with pytest.raises(TypeError):
+        waic(centered_eight)
+
+
+def test_waic_warning(centered_eight):
+    with pytest.warns(UserWarning):
+        waic(centered_eight, pointwise=True)
+
+
+def loo_bad(centered_eight):
+    with pytest.raises(TypeError):
+        loo(np.random.randn(2, 10))
+
+    del centered_eight.sample_stats["log_likelihood"]
+    with pytest.raises(TypeError):
+        loo(centered_eight)
 
 
 def test_psis():
