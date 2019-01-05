@@ -146,7 +146,6 @@ class TestNumpyToDataArray:
         assert set(dataset.coords) == {"chain", "draw"}
         assert dataset.chain.shape == (1,)
         assert dataset.draw.shape == (size,)
-        assert dataset.__repr__().startswith("Inference data with groups")
 
     def test_warns_bad_shape(self):
         # Shape should be (chain, draw, *shape)
@@ -175,6 +174,7 @@ class TestNumpyToDataArray:
         assert inference_data.foo.chain.shape == shape[:1]
         assert inference_data.foo.draw.shape == shape[1:2]
         assert inference_data.foo[var_name].shape == shape
+        assert repr(inference_data).startswith("Inference data with groups")
 
     def test_more_chains_than_draws(self):
         shape = (10, 4)
