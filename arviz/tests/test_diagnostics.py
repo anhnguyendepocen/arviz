@@ -4,7 +4,8 @@ import numpy as np
 import pytest
 
 from ..data import load_arviz_data
-from ..stats import rhat, effective_n, geweke, ks_summary
+from ..stats import rhat, effective_n, geweke
+from ..stats.diagnostics import ks_summary
 
 GOOD_RHAT = 1.1
 
