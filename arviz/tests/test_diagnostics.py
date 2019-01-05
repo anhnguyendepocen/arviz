@@ -70,7 +70,6 @@ class TestDiagnostics:
         assert gw_stat.shape[0] == intervals
         assert 10000 * last - gw_stat[:, 0].max() == 1
 
-
     def test_geweke_bad_interval(self):
         # lower bound
         with pytest.raises(ValueError):
