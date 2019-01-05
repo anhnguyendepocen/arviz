@@ -1,4 +1,5 @@
 # pylint: disable=no-member, invalid-name, redefined-outer-name
+from collections import namedtuple
 import os
 from urllib.parse import urlunsplit
 
