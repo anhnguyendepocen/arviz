@@ -145,7 +145,7 @@ class TestNumpyToDataArray:
         assert set(dataset.coords) == {"chain", "draw"}
         assert dataset.chain.shape == (1,)
         assert dataset.draw.shape == (size,)
-        assert dataset.__repr__.startswith("Inference data with groups")
+        assert dataset.__repr__().startswith("Inference data with groups")
 
     def test_warns_bad_shape(self):
         # Shape should be (chain, draw, *shape)
@@ -361,9 +361,9 @@ class TestEmceeNetCDFUtils:
     def test_inference_data(self, data):
         inference_data = self.get_inference_data(data)
         assert hasattr(inference_data, "posterior")
-        assert hasattr(inference_data.posterio, "ln(f)")
-        assert hasattr(inference_data.posterio, "b")
-        assert hasattr(inference_data.posterio, "m")
+        assert hasattr(inference_data.posterior, "ln(f)")
+        assert hasattr(inference_data.posterior, "b")
+        assert hasattr(inference_data.posterior, "m")
 
     def test_verify_var_names(self, data):
         with pytest.raises(ValueError):

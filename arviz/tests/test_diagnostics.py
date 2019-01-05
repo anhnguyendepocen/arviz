@@ -70,18 +70,6 @@ class TestDiagnostics:
         assert gw_stat.shape[0] == intervals
         assert 10000 * last - gw_stat[:, 0].max() == 1
 
-    def test_geweke_no_intervals(self):
-        first = 0.1
-        last = 0.5
-        intervals = None
-
-        gw_stat = geweke(np.random.randn(10000), first=first, last=last, intervals=intervals)
-
-        # all geweke values should be between -1 and 1 for this many draws from a
-        # normal distribution
-        assert ((gw_stat[:, 1] > -1) | (gw_stat[:, 1] < 1)).all()
-
-        assert 10000 * last - gw_stat[:, 0].max() == 1
 
     def test_geweke_bad_interval(self):
         # lower bound

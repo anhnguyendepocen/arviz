@@ -1,5 +1,5 @@
 # pylint: disable=redefined-outer-name
-
+from copy import deepcopy
 import numpy as np
 from numpy.testing import assert_almost_equal, assert_array_almost_equal, assert_array_less
 import pytest
@@ -95,6 +95,7 @@ def test_waic(centered_eight):
 
 def test_waic_bad(centered_eight):
     """Test widely available information criterion calculation"""
+    centered_eight = deepcopy(centered_eight)
     del centered_eight.sample_stats["log_likelihood"]
     with pytest.raises(TypeError):
         waic(centered_eight)
@@ -121,6 +122,7 @@ def test_loo_bad(centered_eight):
     with pytest.raises(TypeError):
         loo(np.random.randn(2, 10))
 
+    centered_eight = deepcopy(centered_eight)
     del centered_eight.sample_stats["log_likelihood"]
     with pytest.raises(TypeError):
         loo(centered_eight)
