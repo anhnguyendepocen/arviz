@@ -37,7 +37,6 @@ class TestDiagnostics:
     def test_rhat_bad_shape(self):
         with pytest.raises(TypeError):
             rhat(np.random.randn(3))
-        assert 1 / GOOD_RHAT > r_hat or GOOD_RHAT < r_hat
 
     def test_effective_n_array(self):
         eff_n = effective_n(np.random.randn(4, 100))
@@ -100,6 +99,8 @@ class TestDiagnostics:
         pareto_tail_indices = np.array([0.1, 0.1, 0.1, 0.2, 0.2, 0.2, 0.2])
         with pytest.warns(UserWarning):
             summary = ks_summary(pareto_tail_indices)
+        assert summary is not None
         pareto_tail_indices2 = np.array([0.1, 0.1, 0.1, 0.2, 0.2, 0.2, 0.6])
         with pytest.warns(UserWarning):
             summary2 = ks_summary(pareto_tail_indices2)
+        assert summary2 is not None

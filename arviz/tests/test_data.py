@@ -18,7 +18,6 @@ from arviz import (
     to_netcdf,
     load_data,
     save_data,
-    InferenceData,
     load_arviz_data,
     list_datasets,
     clear_data_home,

@@ -6,7 +6,7 @@ import pytest
 from scipy.stats import linregress
 
 from ..data import load_arviz_data
-from ..stats import bfmi, compare, hpd, r2_score, waic, psislw, summary
+from ..stats import bfmi, compare, hpd, loo, r2_score, waic, psislw, summary
 
 
 @pytest.fixture(scope="session")
@@ -95,9 +95,6 @@ def test_waic(centered_eight):
 
 def test_waic_bad(centered_eight):
     """Test widely available information criterion calculation"""
-    centered_eight.sample
-    assert waic(centered_eight) is not None
-
     del centered_eight.sample_stats["log_likelihood"]
     with pytest.raises(TypeError):
         waic(centered_eight)
@@ -112,7 +109,15 @@ def test_waic_warning(centered_eight):
         waic(centered_eight, pointwise=True)
 
 
-def loo_bad(centered_eight):
+def test_loo(centered_eight):
+    assert loo(centered_eight) is not None
+
+
+def test_loo_pointwise(centered_eight):
+    assert loo(centered_eight, pointwise=True) is not None
+
+
+def test_loo_bad(centered_eight):
     with pytest.raises(TypeError):
         loo(np.random.randn(2, 10))
 
@@ -121,7 +126,7 @@ def loo_bad(centered_eight):
         loo(centered_eight)
 
 
-def test_psis():
+def test_psislw():
     linewidth = np.random.randn(20000, 10)
     _, khats = psislw(linewidth)
     assert_array_less(khats, 0.5)
