@@ -91,6 +91,7 @@ def test_summary_bad_fmt(centered_eight):
 def test_waic(centered_eight):
     """Test widely available information criterion calculation"""
     assert waic(centered_eight) is not None
+    assert waic(crntered_eight, pointwise=True) is not None
 
 
 def test_waic_bad(centered_eight):
@@ -103,11 +104,6 @@ def test_waic_bad(centered_eight):
     del centered_eight.sample_stats
     with pytest.raises(TypeError):
         waic(centered_eight)
-
-
-def test_waic_warning(centered_eight):
-    with pytest.warns(UserWarning):
-        waic(centered_eight, pointwise=True)
 
 
 def test_loo(centered_eight):
