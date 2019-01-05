@@ -365,10 +365,6 @@ class TestEmceeNetCDFUtils:
         with pytest.raises(ValueError):
             from_emcee(data.obj, arg_names=["not", "enough"])
 
-    def test_inference_data(self, obj):
-        inference_data = self.get_inference_data(obj)
-        assert hasattr(inference_data, "posterior")
-
 
 class TestIONetCDFUtils:
     @pytest.fixture(scope="class")
