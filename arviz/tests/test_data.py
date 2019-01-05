@@ -74,10 +74,18 @@ def no_remote_data(monkeypatch, tmpdir):
             filename=filename, url=url, checksum="bad!", description=centered.description
         ),
     )
+    UnknownFileMetaData = namedtuple(
+        "UnknownFileMetaData", ["filename", "url", "checksum", "description"]
+    )
     monkeypatch.setitem(
         REMOTE_DATASETS,
         "test_unknown",
-        dict(filename="Not a file", url=None, checksum=None, description="Test bad REMOTE_DATASET"),
+        UnknownFileMetaData(
+            filename=filename,
+            url=url,
+            checksum="9ae00c83654b3f061d32c882ec0a270d10838fa36515ecb162b89a290e014849",
+            description="Test bad REMOTE_DATASET",
+        ),
     )
 
 
